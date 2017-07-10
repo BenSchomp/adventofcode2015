@@ -1,5 +1,5 @@
 map = {}
-cmds = []
+cmds = {}
 intmax = 65535
 
 class String
@@ -8,13 +8,15 @@ class String
   end
 end
 
-File.open("07.txtx", "r") do |f|
+File.open("07.txt", "r") do |f|
+  i = 0
   f.each_line do |line|
     (lhs_, rhs) = line.split('->')
     lhs_.strip!
     rhs.strip!
     lhs = lhs_.split()
-    cmds.push( [lhs, rhs] )
+    cmds[i] = [lhs, rhs]
+    i += 1
   end
 end
 
@@ -23,6 +25,7 @@ count = 0
 while cmds.length > 0 do
   value = nil
   line = cmds[i]
+  print "#{i}. 0: #{line[0]}, 1: #{line[1]}\n"
   lhs = line[0]
   rhs = line[1]
 
@@ -78,7 +81,7 @@ while cmds.length > 0 do
     else
       map[rhs] = value
     end
-    cmds.delete_at( i )
+    cmds.delete( i )
     i = 0
 
     count += 1
